@@ -127,7 +127,17 @@
     .libro-card{display:flex;flex-direction:column;transition:transform .4s;}
     .libro-card:hover{transform:translateY(-5px);}
     .libro-portada{height:280px;background:linear-gradient(160deg,var(--pc1),var(--pc2));border:1px solid rgba(201,168,76,0.2);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;text-align:center;position:relative;overflow:hidden;}
-    .libro-portada::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top,rgba(201,168,76,0.08),transparent 70%);}
+    .libro-portada img{
+2
+width:100%;
+3
+height:100%;
+4
+object-fit:cover;
+5
+display:block;
+6
+}    .libro-portada::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top,rgba(201,168,76,0.08),transparent 70%);}
     .libro-portada-ico{font-size:2.5rem;margin-bottom:1rem;position:relative;}
     .libro-portada h4{font-family:'Cinzel',serif;font-size:0.9rem;font-weight:400;color:var(--champagne);letter-spacing:0.05em;line-height:1.4;position:relative;}
     .libro-portada .libro-autor{font-size:0.75rem;color:var(--crema);opacity:0.5;margin-top:0.5rem;font-style:italic;position:relative;}
