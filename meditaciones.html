@@ -53,6 +53,16 @@
     .med-card audio{width:100%;margin-top:1.3rem;accent-color:var(--dorado);height:40px;}
     .med-card.pendiente{opacity:0.7;}
 
+    .med-etiqueta{display:block;font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--dorado);opacity:0.7;margin-top:1.3rem;}
+    .med-card .med-etiqueta + audio{margin-top:0.5rem;}
+    .med-enlaces{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1rem;}
+    .btn-plat{display:inline-block;text-decoration:none;font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--dorado-brillante);border:1px solid rgba(201,168,76,0.35);padding:0.55rem 1rem;transition:all .3s;}
+    .btn-plat:hover{background:rgba(201,168,76,0.15);border-color:var(--dorado);}
+    .plataformas{margin:4.5rem auto 0;max-width:760px;padding:3rem 2rem;border:1px solid rgba(201,168,76,0.18);background:var(--negro-medio);}
+    .plataformas h2{font-family:'Cinzel',serif;font-weight:400;font-size:clamp(1.1rem,2.2vw,1.5rem);color:var(--champagne);letter-spacing:0.08em;margin-bottom:1rem;}
+    .plataformas p{opacity:0.75;font-size:1.05rem;line-height:1.8;margin-bottom:1.8rem;}
+    .plataformas .med-enlaces{justify-content:center;gap:0.8rem;}
+    .plataformas .btn-plat{font-size:0.68rem;padding:0.8rem 1.4rem;}
     .aviso{margin:4rem auto 0;max-width:640px;font-size:0.95rem;font-style:italic;opacity:0.55;line-height:1.7;}
     .vacio{margin-top:3rem;opacity:0.6;font-style:italic;}
 
@@ -83,11 +93,18 @@
     <div class="sec-label">Experimentar</div>
     <h1 class="sec-title">Meditaciones Guiadas</h1>
     <div class="divider"></div>
-    <p class="body-text">Prácticas organizadas por intención, acompañadas de música afinada en 432 Hz. Busca un lugar tranquilo, usa auriculares y deja que cada sesión sea un viaje hacia el centro.</p>
+    <p class="body-text">Prácticas organizadas por intención, acompañadas de música afinada en 432 Hz. Escucha un fragmento, busca un lugar tranquilo y deja que cada sesión sea un viaje hacia el centro.</p>
 
     <div class="filtros" id="filtros" role="group" aria-label="Filtrar por intención"></div>
     <div class="meditaciones-grid" id="lista"></div>
     <p class="vacio" id="vacio" hidden>Las meditaciones están en camino. Vuelve pronto.</p>
+
+    <div class="plataformas">
+      <h2>Escucha las meditaciones completas</h2>
+      <p>Aquí tienes un pequeño fragmento de cada práctica. Las versiones completas, y muchas más, te esperan en tu plataforma favorita.</p>
+      <div class="med-enlaces" id="plataformas"></div>
+      <p id="plataformas-pronto" style="margin:0;font-style:italic;opacity:0.55;" hidden>Muy pronto en Spotify, YouTube y más plataformas.</p>
+    </div>
 
     <p class="aviso">AureGolden432 es un proyecto de música contemplativa. La afinación en 432 Hz es una elección estética y sonora. Estas meditaciones no sustituyen ningún tratamiento médico ni psicológico. No las escuches mientras conduces o manejas maquinaria.</p>
   </section>
@@ -100,6 +117,7 @@
 </footer>
 
 <script>
+  const NOMBRES = {spotify:'Spotify', youtube:'YouTube', insight_timer:'Insight Timer', apple_music:'Apple Music', amazon_music:'Amazon Music'};
   const lista = document.getElementById('lista');
   const filtros = document.getElementById('filtros');
   const vacio = document.getElementById('vacio');
@@ -107,27 +125,38 @@
   let filtroActual = 'Todas';
 
   function esc(t){ const d=document.createElement('div'); d.textContent=t||''; return d.innerHTML; }
+  function lleno(v){ return typeof v==='string' && v.trim()!==''; }
+  function urlSegura(u){ u=(u||'').trim(); return /^https:\/\//i.test(u) ? u : ''; }
+  function botones(enlaces){
+    return Object.entries(enlaces||{})
+      .filter(([k,u]) => urlSegura(u))
+      .map(([k,u]) => `<a class="btn-plat" href="${esc(urlSegura(u))}" target="_blank" rel="noopener">${esc(NOMBRES[k]||k)}</a>`)
+      .join('');
+  }
 
   function pintar(){
     const visibles = meditaciones.filter(m => filtroActual==='Todas' || m.intencion===filtroActual);
     lista.innerHTML = visibles.map(m => {
-      const ok = !!(m.archivo && m.archivo.trim());
-      return `<article class="med-card ${ok?'disponible':'pendiente'}">
+      const frag = lleno(m.fragmento);
+      const enl = botones(m.enlaces);
+      const disponible = frag || enl;
+      return `<article class="med-card ${disponible?'disponible':'pendiente'}">
         <div class="med-intencion">Intención · ${esc(m.intencion)}</div>
         <h2>${esc(m.titulo)}</h2>
         <p>${esc(m.descripcion)}</p>
         <div class="med-meta">
           ${m.duracion?`<span class="med-duracion">${esc(m.duracion)}</span>`:''}
           ${m.nivel?`<span class="med-nivel">${esc(m.nivel)}</span>`:''}
-          ${ok?'':'<span class="med-proximamente">Próximamente</span>'}
+          ${disponible?'':'<span class="med-proximamente">Próximamente</span>'}
         </div>
-        ${ok?`<audio controls preload="none" src="meditaciones/${encodeURI(m.archivo.trim())}"></audio>`:''}
+        ${frag?`<span class="med-etiqueta">Escucha un fragmento</span><audio controls preload="none" src="meditaciones/${encodeURI(m.fragmento.trim())}"></audio>`:''}
+        ${enl?`<div class="med-enlaces">${enl}</div>`:''}
       </article>`;
     }).join('');
     vacio.hidden = visibles.length>0;
   }
 
-  // Solo suena una meditación a la vez
+  // Solo suena un audio a la vez
   document.addEventListener('play', e => {
     document.querySelectorAll('audio').forEach(a => { if(a!==e.target) a.pause(); });
   }, true);
@@ -135,8 +164,13 @@
   fetch('meditaciones/meditaciones.json', {cache:'no-cache'})
     .then(r => r.json())
     .then(datos => {
+      const plat = botones(datos.plataformas);
+      document.getElementById('plataformas').innerHTML = plat;
+      document.getElementById('plataformas-pronto').hidden = !!plat;
+
+      const tiene = m => (lleno(m.fragmento) || !!botones(m.enlaces)) ? 1 : 0;
       // Las disponibles primero; dentro de cada grupo, las más recientes arriba
-      meditaciones = datos.sort((a,b) => (!!b.archivo - !!a.archivo) || String(b.fecha||'').localeCompare(String(a.fecha||'')));
+      meditaciones = (datos.meditaciones||[]).sort((a,b) => (tiene(b)-tiene(a)) || String(b.fecha||'').localeCompare(String(a.fecha||'')));
       const intenciones = ['Todas', ...new Set(meditaciones.map(m => m.intencion).filter(Boolean))];
       filtros.innerHTML = intenciones.map(i => `<button class="${i===filtroActual?'active':''}" data-i="${esc(i)}">${esc(i)}</button>`).join('');
       filtros.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
@@ -146,7 +180,7 @@
       }));
       pintar();
     })
-    .catch(() => { vacio.hidden = false; });
+    .catch(() => { vacio.hidden = false; document.getElementById('plataformas-pronto').hidden = false; });
 </script>
 </body>
 </html>

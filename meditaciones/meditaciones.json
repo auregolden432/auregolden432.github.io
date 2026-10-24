@@ -1,56 +1,101 @@
-[
-  {
-    "titulo": "Calma Interior",
-    "intencion": "Calma",
-    "descripcion": "Una práctica suave para disolver la tensión y encontrar el silencio que ya existe dentro de ti.",
-    "duracion": "20 min",
-    "nivel": "Todos los niveles",
-    "archivo": "",
-    "fecha": ""
+{
+  "plataformas": {
+    "spotify": "",
+    "youtube": "",
+    "insight_timer": "",
+    "apple_music": "",
+    "amazon_music": ""
   },
-  {
-    "titulo": "Corazón Agradecido",
-    "intencion": "Gratitud",
-    "descripcion": "Meditación del corazón para despertar el reconocimiento de lo sagrado en lo cotidiano.",
-    "duracion": "15 min",
-    "nivel": "Principiante",
-    "archivo": "",
-    "fecha": ""
-  },
-  {
-    "titulo": "Sueño Profundo",
-    "intencion": "Sueño",
-    "descripcion": "Guía sonora nocturna para soltar el día con suavidad y entrar en un descanso regenerador.",
-    "duracion": "30 min",
-    "nivel": "Todos los niveles",
-    "archivo": "",
-    "fecha": ""
-  },
-  {
-    "titulo": "Equilibrio Emocional",
-    "intencion": "Equilibrio",
-    "descripcion": "Práctica de integración para transitar emociones con consciencia y sin resistencia.",
-    "duracion": "25 min",
-    "nivel": "Intermedio",
-    "archivo": "",
-    "fecha": ""
-  },
-  {
-    "titulo": "Respiración Consciente",
-    "intencion": "Respiración",
-    "descripcion": "La respiración como puerta. Un retorno al cuerpo a través del ritmo natural de la vida.",
-    "duracion": "12 min",
-    "nivel": "Principiante",
-    "archivo": "",
-    "fecha": ""
-  },
-  {
-    "titulo": "Presencia Total",
-    "intencion": "Presencia",
-    "descripcion": "Meditación de atención plena para habitar completamente el momento que es.",
-    "duracion": "20 min",
-    "nivel": "Avanzado",
-    "archivo": "",
-    "fecha": ""
-  }
-]
+  "meditaciones": [
+    {
+      "titulo": "Calma Interior",
+      "intencion": "Calma",
+      "descripcion": "Una práctica suave para disolver la tensión y encontrar el silencio que ya existe dentro de ti.",
+      "duracion": "20 min",
+      "nivel": "Todos los niveles",
+      "fragmento": "",
+      "enlaces": {
+        "spotify": "",
+        "youtube": "",
+        "insight_timer": "",
+        "apple_music": ""
+      },
+      "fecha": ""
+    },
+    {
+      "titulo": "Corazón Agradecido",
+      "intencion": "Gratitud",
+      "descripcion": "Meditación del corazón para despertar el reconocimiento de lo sagrado en lo cotidiano.",
+      "duracion": "15 min",
+      "nivel": "Principiante",
+      "fragmento": "",
+      "enlaces": {
+        "spotify": "",
+        "youtube": "",
+        "insight_timer": "",
+        "apple_music": ""
+      },
+      "fecha": ""
+    },
+    {
+      "titulo": "Sueño Profundo",
+      "intencion": "Sueño",
+      "descripcion": "Guía sonora nocturna para soltar el día con suavidad y entrar en un descanso regenerador.",
+      "duracion": "30 min",
+      "nivel": "Todos los niveles",
+      "fragmento": "",
+      "enlaces": {
+        "spotify": "",
+        "youtube": "",
+        "insight_timer": "",
+        "apple_music": ""
+      },
+      "fecha": ""
+    },
+    {
+      "titulo": "Equilibrio Emocional",
+      "intencion": "Equilibrio",
+      "descripcion": "Práctica de integración para transitar emociones con consciencia y sin resistencia.",
+      "duracion": "25 min",
+      "nivel": "Intermedio",
+      "fragmento": "",
+      "enlaces": {
+        "spotify": "",
+        "youtube": "",
+        "insight_timer": "",
+        "apple_music": ""
+      },
+      "fecha": ""
+    },
+    {
+      "titulo": "Respiración Consciente",
+      "intencion": "Respiración",
+      "descripcion": "La respiración como puerta. Un retorno al cuerpo a través del ritmo natural de la vida.",
+      "duracion": "12 min",
+      "nivel": "Principiante",
+      "fragmento": "",
+      "enlaces": {
+        "spotify": "",
+        "youtube": "",
+        "insight_timer": "",
+        "apple_music": ""
+      },
+      "fecha": ""
+    },
+    {
+      "titulo": "Presencia Total",
+      "intencion": "Presencia",
+      "descripcion": "Meditación de atención plena para habitar completamente el momento que es.",
+      "duracion": "20 min",
+      "nivel": "Avanzado",
+      "fragmento": "",
+      "enlaces": {
+        "spotify": "",
+        "youtube": "",
+        "insight_timer": "",
+        "apple_music": ""
+      },
+      "fecha": ""
+    }
+  ]
+}

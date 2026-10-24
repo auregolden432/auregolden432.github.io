@@ -1,45 +1,52 @@
-# 🧘 Meditaciones · cómo publicar una nueva
+# 🧘 Meditaciones · cómo actualizar la página
 
-La página pública es **auregolden432.com/meditaciones.html**. Se rellena sola a partir de `meditaciones.json`. Para publicar una meditación solo hacen falta dos pasos.
+La página pública es **auregolden432.com/meditaciones.html**. Se rellena sola a partir de `meditaciones.json`.
 
-## 1. Sube el audio
+La idea: en la web solo hay **fragmentos cortos** (1–2 min) y botones que llevan a las versiones completas en las plataformas. Los audios completos **no** se suben aquí.
 
-1. En GitHub, entra en la carpeta `meditaciones/audio/`.
-2. Pulsa **Add file → Upload files**, arrastra el archivo y pulsa **Commit changes**.
+## 1. Sube un fragmento
 
-Recomendaciones para el archivo:
-- Formato **MP3** a 128–192 kbps. Una meditación de 20 minutos ocupa unos 20–30 MB. GitHub no admite archivos de más de 100 MB.
-- Nombre **sin espacios, tildes ni ñ**, por ejemplo `calma-interior.mp3`.
+1. Entra en la carpeta `meditaciones/audio/` → **Add file → Upload files** → arrastra el MP3 → **Commit changes**.
+2. El fragmento debe ser un **MP3 de 1–2 minutos** a 128–192 kbps (pesa unos 2–3 MB). Ponle un nombre sin espacios, tildes ni ñ, por ejemplo `calma-interior-fragmento.mp3`.
 
-## 2. Actívala en `meditaciones.json`
+## 2. Actívalo en `meditaciones.json`
 
-1. Abre `meditaciones/meditaciones.json` y pulsa el lápiz ✏️.
-2. Busca la meditación y rellena `"archivo"` con la ruta del audio. Rellena también `"fecha"` con el formato año-mes-día:
+Abre `meditaciones/meditaciones.json` → lápiz ✏️. Busca la meditación y rellena:
 
 ```json
-"archivo": "audio/calma-interior.mp3",
+"fragmento": "audio/calma-interior-fragmento.mp3",
+"enlaces": {
+  "spotify": "https://open.spotify.com/track/...",
+  "youtube": "https://www.youtube.com/watch?v=...",
+  "insight_timer": "",
+  "apple_music": ""
+},
 "fecha": "2026-11-02"
 ```
 
-3. Pulsa **Commit changes**. En uno o dos minutos aparecerá con su reproductor. Mientras `"archivo"` esté vacío, la tarjeta muestra **Próximamente**.
+- Los enlaces que dejes vacíos `""` no aparecen. Cada enlace tiene que empezar por `https://`.
+- Mientras una meditación no tenga ni fragmento ni enlaces, su tarjeta muestra **Próximamente**.
+
+Guarda con **Commit changes**. En uno o dos minutos se ve en la web.
+
+## 3. Tus perfiles en las plataformas (una sola vez)
+
+Al principio del archivo está el bloque `"plataformas"`. Pon ahí el enlace a **tu perfil o canal** en cada plataforma. Son los botones grandes de "Escucha las meditaciones completas":
+
+```json
+"plataformas": {
+  "spotify": "https://open.spotify.com/artist/...",
+  "youtube": "https://www.youtube.com/@...",
+  "insight_timer": "",
+  "apple_music": "",
+  "amazon_music": ""
+}
+```
+
+Mientras estén vacíos, la página dice "Muy pronto en Spotify, YouTube y más plataformas".
 
 ## Añadir una meditación nueva
 
-Copia un bloque completo `{ ... }` y pégalo después del último. Pon una **coma** entre bloques y ninguna después del último:
+Copia un bloque completo `{ ... }` de la lista `"meditaciones"` y pégalo después del último. Pon una **coma** entre bloques y ninguna después del último. Si usas una `intencion` nueva, aparece un botón de filtro nuevo.
 
-```json
-  {
-    "titulo": "Nombre de la meditación",
-    "intencion": "Calma",
-    "descripcion": "Una o dos frases sobre la práctica.",
-    "duracion": "15 min",
-    "nivel": "Principiante",
-    "archivo": "audio/nombre-del-archivo.mp3",
-    "fecha": "2026-11-15"
-  }
-```
-
-- `intencion` crea los botones de filtro de la página. Si usas una intención nueva, aparece un botón nuevo.
-- Las meditaciones con audio salen primero, y las más recientes arriba.
-
-> Si después de guardar la página sale vacía, casi siempre falta o sobra una coma en el JSON. Puedes pegar el contenido en jsonlint.com para revisarlo.
+> Si después de guardar la página sale vacía, casi siempre falta o sobra una coma. Pega el contenido en jsonlint.com para revisarlo.
