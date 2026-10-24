@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://auregolden432.com/sitemap.xml
