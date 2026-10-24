@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Meditaciones Guiadas — AureGolden432</title>
+  <meta name="description" content="Meditaciones guiadas con música afinada en 432 Hz, organizadas por intención: calma, gratitud, sueño, equilibrio, respiración y presencia."/>
+  <link rel="icon" href="images/logo.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{
+      --negro:#080600;--negro-medio:#0d0a01;--negro-suave:#111008;
+      --dorado:#C9A84C;--dorado-brillante:#F0D97A;--dorado-oscuro:#7A5C10;
+      --champagne:#E8C97A;--crema:#D4B896;
+      color-scheme:dark;
+    }
+    html{scroll-behavior:smooth;}
+    body{background:var(--negro);color:var(--crema);font-family:'Cormorant Garamond',Georgia,serif;overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column;}
+
+    nav{position:sticky;top:0;z-index:100;padding:1.2rem 2.5rem;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,rgba(8,6,0,0.97),rgba(8,6,0,0.85));border-bottom:1px solid rgba(201,168,76,0.08);}
+    nav a.logo img{height:46px;display:block;filter:drop-shadow(0 0 8px rgba(201,168,76,0.4));}
+    nav ul{list-style:none;display:flex;gap:2rem;flex-wrap:wrap;}
+    nav ul a{color:var(--crema);text-decoration:none;font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;transition:color .3s;opacity:0.85;}
+    nav ul a:hover,nav ul a[aria-current]{color:var(--dorado-brillante);opacity:1;}
+
+    main{flex:1;}
+    .sec{padding:5rem 2rem 6rem;max-width:1100px;margin:0 auto;text-align:center;}
+    .sec-label{font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--dorado);margin-bottom:1.2rem;opacity:0.8;}
+    h1.sec-title{font-family:'Cinzel',serif;font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:400;color:var(--champagne);letter-spacing:0.1em;margin-bottom:1.5rem;}
+    .divider{width:70px;height:1px;background:linear-gradient(to right,transparent,var(--dorado),transparent);margin:1.5rem auto;}
+    p.body-text{font-size:1.15rem;line-height:1.9;opacity:0.82;max-width:680px;margin:0 auto;}
+
+    .filtros{display:flex;flex-wrap:wrap;justify-content:center;gap:0.6rem;margin-top:2.5rem;}
+    .filtros button{background:none;border:1px solid rgba(201,168,76,0.25);color:var(--crema);font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;padding:0.5rem 1rem;cursor:pointer;transition:all .3s;}
+    .filtros button:hover{border-color:var(--dorado);}
+    .filtros button.active{background:rgba(201,168,76,0.15);border-color:var(--dorado);color:var(--dorado-brillante);}
+
+    .meditaciones-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;margin-top:2.5rem;}
+    .med-card{background:var(--negro-medio);border:1px solid rgba(201,168,76,0.12);padding:2.2rem 1.8rem;text-align:left;transition:border-color .4s;position:relative;overflow:hidden;display:flex;flex-direction:column;}
+    .med-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,var(--dorado),transparent);opacity:0;transition:opacity .4s;}
+    .med-card:hover{border-color:rgba(201,168,76,0.35);}
+    .med-card:hover::before,.med-card.disponible::before{opacity:1;}
+    .med-intencion{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.25em;color:var(--dorado);margin-bottom:1rem;opacity:0.75;text-transform:uppercase;}
+    .med-card h2{font-family:'Cinzel',serif;font-size:1rem;font-weight:400;color:var(--champagne);letter-spacing:0.05em;margin-bottom:0.8rem;}
+    .med-card p{font-size:1rem;line-height:1.7;opacity:0.7;margin-bottom:1.5rem;flex:1;}
+    .med-meta{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;}
+    .med-duracion{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.15em;color:var(--dorado);border:1px solid rgba(201,168,76,0.25);padding:0.25rem 0.7rem;}
+    .med-nivel{font-size:0.8rem;opacity:0.45;}
+    .med-proximamente{margin-left:auto;font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;opacity:0.45;}
+    .med-card audio{width:100%;margin-top:1.3rem;accent-color:var(--dorado);height:40px;}
+    .med-card.pendiente{opacity:0.7;}
+
+    .aviso{margin:4rem auto 0;max-width:640px;font-size:0.95rem;font-style:italic;opacity:0.55;line-height:1.7;}
+    .vacio{margin-top:3rem;opacity:0.6;font-style:italic;}
+
+    footer{border-top:1px solid rgba(201,168,76,0.1);padding:3rem 2rem;text-align:center;}
+    footer img{height:38px;opacity:0.55;margin-bottom:1.5rem;}
+    footer p{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.2em;color:var(--dorado);opacity:0.4;}
+
+    @media(max-width:768px){
+      nav{padding:1rem;}
+      nav ul{gap:1rem;}
+      .sec{padding:3.5rem 1rem 4rem;}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="index.html" aria-label="AureGolden432 — Inicio"><img src="images/logo.png" alt="AureGolden432"/></a>
+  <ul>
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="meditaciones.html" aria-current="page">Meditaciones</a></li>
+    <li><a href="biblioteca.html">Biblioteca</a></li>
+  </ul>
+</nav>
+
+<main>
+  <section class="sec">
+    <div class="sec-label">Experimentar</div>
+    <h1 class="sec-title">Meditaciones Guiadas</h1>
+    <div class="divider"></div>
+    <p class="body-text">Prácticas organizadas por intención, acompañadas de música afinada en 432 Hz. Busca un lugar tranquilo, usa auriculares y deja que cada sesión sea un viaje hacia el centro.</p>
+
+    <div class="filtros" id="filtros" role="group" aria-label="Filtrar por intención"></div>
+    <div class="meditaciones-grid" id="lista"></div>
+    <p class="vacio" id="vacio" hidden>Las meditaciones están en camino. Vuelve pronto.</p>
+
+    <p class="aviso">AureGolden432 es un proyecto de música contemplativa. La afinación en 432 Hz es una elección estética y sonora. Estas meditaciones no sustituyen ningún tratamiento médico ni psicológico. No las escuches mientras conduces o manejas maquinaria.</p>
+  </section>
+</main>
+
+<footer>
+  <img src="images/logo.png" alt=""/>
+  <p>&copy; 2026 AUREGOLDEN432 &nbsp;—&nbsp; TODOS LOS DERECHOS RESERVADOS</p>
+  <p style="margin-top:0.5rem;">LUX IN TENEBRIS LUCET</p>
+</footer>
+
+<script>
+  const lista = document.getElementById('lista');
+  const filtros = document.getElementById('filtros');
+  const vacio = document.getElementById('vacio');
+  let meditaciones = [];
+  let filtroActual = 'Todas';
+
+  function esc(t){ const d=document.createElement('div'); d.textContent=t||''; return d.innerHTML; }
+
+  function pintar(){
+    const visibles = meditaciones.filter(m => filtroActual==='Todas' || m.intencion===filtroActual);
+    lista.innerHTML = visibles.map(m => {
+      const ok = !!(m.archivo && m.archivo.trim());
+      return `<article class="med-card ${ok?'disponible':'pendiente'}">
+        <div class="med-intencion">Intención · ${esc(m.intencion)}</div>
+        <h2>${esc(m.titulo)}</h2>
+        <p>${esc(m.descripcion)}</p>
+        <div class="med-meta">
+          ${m.duracion?`<span class="med-duracion">${esc(m.duracion)}</span>`:''}
+          ${m.nivel?`<span class="med-nivel">${esc(m.nivel)}</span>`:''}
+          ${ok?'':'<span class="med-proximamente">Próximamente</span>'}
+        </div>
+        ${ok?`<audio controls preload="none" src="meditaciones/${encodeURI(m.archivo.trim())}"></audio>`:''}
+      </article>`;
+    }).join('');
+    vacio.hidden = visibles.length>0;
+  }
+
+  // Solo suena una meditación a la vez
+  document.addEventListener('play', e => {
+    document.querySelectorAll('audio').forEach(a => { if(a!==e.target) a.pause(); });
+  }, true);
+
+  fetch('meditaciones/meditaciones.json', {cache:'no-cache'})
+    .then(r => r.json())
+    .then(datos => {
+      // Las disponibles primero; dentro de cada grupo, las más recientes arriba
+      meditaciones = datos.sort((a,b) => (!!b.archivo - !!a.archivo) || String(b.fecha||'').localeCompare(String(a.fecha||'')));
+      const intenciones = ['Todas', ...new Set(meditaciones.map(m => m.intencion).filter(Boolean))];
+      filtros.innerHTML = intenciones.map(i => `<button class="${i===filtroActual?'active':''}" data-i="${esc(i)}">${esc(i)}</button>`).join('');
+      filtros.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+        filtroActual = b.dataset.i;
+        filtros.querySelectorAll('button').forEach(x => x.classList.toggle('active', x===b));
+        pintar();
+      }));
+      pintar();
+    })
+    .catch(() => { vacio.hidden = false; });
+</script>
+</body>
+</html>
